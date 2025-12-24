@@ -1,0 +1,13 @@
+=== One Layer Linear Model Prediction Results ===
+results : tensor([[0.5000],
+        [0.5000],
+        [0.5000],
+        [0.5000]], grad_fn=<AddmmBackward0>)
+parameters : [array([[1.2862355e-07, 1.3083749e-07]], dtype=float32), array([0.49999982], dtype=float32)]
+=== Two-layer ReLU Model Prediction Results ===
+results : tensor([[7.7486e-07],
+        [1.0000e+00],
+        [1.0000e+00],
+        [8.9407e-07]], grad_fn=<AddmmBackward0>)
+parameters : [array([[-1.2514037 ,  1.2514036 ],
+       [-0.86849344,  0.8684933 ]], dtype=float32), array([2.1585773e-09, 8.6849350e-01], dtype=float32), array([[ 1.5982026, -1.1514168]], dtype=float32), array([0.99999875], dtype=float32)]
