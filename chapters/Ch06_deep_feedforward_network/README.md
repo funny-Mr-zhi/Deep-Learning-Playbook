@@ -38,31 +38,31 @@
 
  $目标函数：f^*(x)\quad模型函数f(x;\theta) $
 
- $ $J(\theta) = \frac{1}{4}\sum_{x \in X}(f^*(x) - f(x;\theta))^2 \quad X = \{[0,0]^T,[0, 1]^T,[1, 0]^T,[1,1]^T\} $ $
+ $$J(\theta) = \frac{1}{4}\sum_{x \in X}(f^*(x) - f(x;\theta))^2 \quad X = \{[0,0]^T,[0, 1]^T,[1, 0]^T,[1,1]^T\} $$
 
 这里使用最常见的MSE代价函数。虽然它在二进制预测任务中并不非常合适，但是在这个简单场景下已足够胜任。对于模型函数 $f(x;\theta) $的输入，与MSE相应的输出相对应的是一个实数，直接表示预测的y值。
 
 ### 模型形式 
 
 > 首先尝试定义一个线性模型：
- $ $f(X; W, b) = X^TW + b $ $
+ $$f(X; W, b) = X^TW + b $$
 
 利用使用[正规方程](./docs/Math_concept.md#闭解式与正规方程)关于 $W,b $最小化 $J(\theta) $，得到[闭解式](./docs/Math_concept.md#闭解式与正规方程)。解得 $W = [0, 0]^T, b = 1/2 $。此时 $J(W, b) = 1/2 $，模型在任意一点都输出0.5，说明当前模型无法正确学到XOR函数。
 
 > 接下来尝试引入隐藏层，先将 $X $映射到变换的特征空间，再利用放射函数映射到 $Y $
 
- $ $ f(X; W_1, W_2, b_1, b_2) = f_2(f_1(x; W_1, b_1), W_2, b_2) $ $
- $ $ H = f_1(X; W_1, b_1) = X^TW_1 + b_1 \quad Y = f_2(H; W_2, b_2) = HW_2 + b_2 $ $
+ $$ f(X; W_1, W_2, b_1, b_2) = f_2(f_1(x; W_1, b_1), W_2, b_2) $$
+ $$ H = f_1(X; W_1, b_1) = X^TW_1 + b_1 \quad Y = f_2(H; W_2, b_2) = HW_2 + b_2 $$
 
 > 如果没有引入激活函数，上式仍可以化简为一个单层的线性模型
 
- $ $f(X; W_1, W_2, b_1, b_2) = (X^TW_1+b_1)W_2 + b_2 = X^T(W_1W_2) + (b_1W_w + b_2) $ $
+ $$f(X; W_1, W_2, b_1, b_2) = (X^TW_1+b_1)W_2 + b_2 = X^T(W_1W_2) + (b_1W_w + b_2) $$
 
 化简后本质上和一个单层的线性模型没有区别，想要引入非线性还需要在隐藏层加入激活函数。
 
 > 以最常见的`RELU`激活函数为例
 
- $ $f(X; W_1, W_2, b_1, b_2) = f_2(RELU(f_1(x; W_1, b_1)), W_2, b_2) \quad RELU(z) = max\{0, z\} $ $
+ $$f(X; W_1, W_2, b_1, b_2) = f_2(RELU(f_1(x; W_1, b_1)), W_2, b_2) \quad RELU(z) = max\{0, z\} $$
 
 下面通过[代码实现一个简单梯度优化程序](./imply_basic.ipynb)得到其中一个解
 
@@ -99,7 +99,7 @@ optimizer = torch.optim.SGD(model.parameters(), lr=lr)
 
 > 大多数情况下，参数模型定义了一个分布 $P(y| x;\theta) $并且简单地使用了**最大似然原理**。
 
- $ $\theta = argmax_\theta \mathcal{L}(\theta|D) $ $
+ $$\theta = argmax_\theta \mathcal{L}(\theta|D) $$
 
 模型参数： $\theta $
 
@@ -111,7 +111,7 @@ optimizer = torch.optim.SGD(model.parameters(), lr=lr)
 
 > 最大化对数似然和最小化代价函数是等价的，此时代价函数可以写作负的对数似然
 
- $ $ J(\theta) = -E_{\textbf {x, y} \sim \hat p_{data}}log p_{model}(\textbf{y}| \textbf{x}) $ $
+ $$ J(\theta) = -E_{\textbf {x, y} \sim \hat p_{data}}log p_{model}(\textbf{y}| \textbf{x}) $$
 
 ### 代价函数
 
@@ -152,7 +152,7 @@ optimizer = torch.optim.SGD(model.parameters(), lr=lr)
 > 大多数隐藏单元的区别仅仅在于激活函数，一般整流线性单元就是一个非常好的默认选择。
 
 ### 整流线性单元及其变体性质
- $ $RELU(x) = max\{0, x\} $ $
+ $$RELU(x) = max\{0, x\} $$
 
 * 可微：一般而言，只在少数点上不可微的函数时可以接受的
 * 当输入为正时，被激活。激活函数本身一阶导为1，二阶导为0，可以较大程度上保留原始输入的梯度不变，不会引入更多数值问题，对于梯度下降算法非常友好
